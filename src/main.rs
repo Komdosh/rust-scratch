@@ -1,15 +1,31 @@
 use core::mem;
 
+const MEANING_OF_LIFE: u8 = 42; //no fixed address
+
+static mut Z: i32 = 64;
+
 fn main() {
     // data_types_playground()
-    scope_and_shadowing()
+    // scope_and_shadowing();
+
+    constants()
 }
 
+fn constants() {
+    println!("constant meaning of life is {}", MEANING_OF_LIFE);
+    unsafe {
+        println!("static {}", Z);
+        Z = 128;
+        println!("static changed {}", Z);
+    }
+}
+
+#[allow(dead_code)]
 fn scope_and_shadowing() {
     let a = 0;
 
-    if i32::pow(a,0) == 1 {
-        println!("It is true");
+    if i32::pow(a, 0) == 1 {
+        println!("it is true");
     }
 
     let a = 2; //overriding
