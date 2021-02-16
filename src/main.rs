@@ -1,9 +1,35 @@
 use core::mem;
 
 fn main() {
-    data_types_playground()
+    // data_types_playground()
+    scope_and_shadowing()
 }
 
+fn scope_and_shadowing() {
+    let a = 0;
+
+    if i32::pow(a,0) == 1 {
+        println!("It is true");
+    }
+
+    let a = 2; //overriding
+
+    {
+        println!("inner scope, outside a = {}", a);
+
+        let a = 1;
+
+        println!("inner scope, new inside a = {}", a);
+
+        let b = 16;
+        if b == 16 {
+            println!("inner scope, new inside b = {}", b)
+        }
+    }
+    println!("outside a = {}", a);
+}
+
+#[allow(dead_code)]
 fn data_types_playground() {
     let first: u8 = 127;
     let mut second: u8 = 128;
