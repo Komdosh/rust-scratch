@@ -1,3 +1,7 @@
+#![allow(dead_code)]
+
+mod sh;
+
 use core::mem;
 
 const MEANING_OF_LIFE: u8 = 42; //no fixed address
@@ -7,8 +11,9 @@ static mut Z: i32 = 64;
 fn main() {
     // data_types_playground()
     // scope_and_shadowing();
+    // constants();
 
-    constants()
+    sh::stack_and_heap();
 }
 
 fn constants() {
@@ -20,7 +25,7 @@ fn constants() {
     }
 }
 
-#[allow(dead_code)]
+
 fn scope_and_shadowing() {
     let a = 0;
 
@@ -45,7 +50,6 @@ fn scope_and_shadowing() {
     println!("outside a = {}", a);
 }
 
-#[allow(dead_code)]
 fn data_types_playground() {
     let first: u8 = 127;
     let mut second: u8 = 128;
