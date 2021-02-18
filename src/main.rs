@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
 use core::mem;
+use std::io::stdin;
 
 mod sh;
 
@@ -16,10 +17,56 @@ fn main() {
     // sh::stack_and_heap();
     // while_loop();
     // for_loop();
-    country_matcher()
+    // country_matcher();
+    locked_state();
 }
 
-fn country_matcher(){
+fn locked_state() {
+    enum State {
+        Locked,
+        Failed,
+        Unlocked,
+    }
+
+    let code = String::from("1234");
+    let mut state = State::Locked;
+    let mut entry = String::new();
+
+    println!("enter a code: ");
+    loop {
+        match state {
+            State::Locked => {
+                let mut input = String::new();
+                match stdin().read_line(&mut input) {
+                    Ok(_) => {
+                        entry.push_str(&input.trim_end());
+                    }
+                    Err(_) => continue
+                }
+                if entry == code {
+                    state = State::Unlocked;
+                    continue;
+                }
+
+                if !code.starts_with(&entry) {
+                    state = State::Failed;
+                }
+            }
+            State::Failed =>{
+                println!("FAILED");
+                entry.clear();
+                state = State::Locked;
+                continue;
+            }
+            State::Unlocked =>{
+                println!("UNLOCKED!");
+                break;
+            }
+        }
+    }
+}
+
+fn country_matcher() {
     let country_code = 46;
 
     let country = match country_code {
@@ -61,7 +108,7 @@ fn for_loop() {
     }
 
     println!("now pos and number enumerate");
-    for(pos, y) in (30..41).enumerate() {
+    for (pos, y) in (30..41).enumerate() {
         println!("{}: {}", pos, y)
     }
 }
