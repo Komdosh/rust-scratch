@@ -14,7 +14,8 @@ fn main() {
     // constants();
     // if_statement()
     // sh::stack_and_heap();
-    while_loop();
+    // while_loop();
+    for_loop();
 }
 
 fn while_loop() {
@@ -32,6 +33,17 @@ fn while_loop() {
         if i > 1 << 10 {
             break;
         }
+    }
+}
+
+fn for_loop() {
+    for x in 1..11 { // [1, 11)
+        println!("x = {}", x);
+    }
+
+    println!("now pos and number enumerate");
+    for(pos, y) in (30..41).enumerate() {
+        println!("{}: {}", pos, y)
     }
 }
 
