@@ -1,8 +1,8 @@
 #![allow(dead_code)]
 
-mod sh;
-
 use core::mem;
+
+mod sh;
 
 const MEANING_OF_LIFE: u8 = 42; //no fixed address
 
@@ -12,8 +12,27 @@ fn main() {
     // data_types_playground()
     // scope_and_shadowing();
     // constants();
+    // if_statement()
+    // sh::stack_and_heap();
+    while_loop();
+}
 
-    sh::stack_and_heap();
+fn while_loop() {
+    let mut i = 1;
+    while i < 1000 {
+        i = i << 1;
+        println!("i = {}", i);
+    }
+
+    println!("now unconditional loop");
+    i = 1;
+    loop {
+        i <<= 1;
+        println!("i = {}", i);
+        if i > 1 << 10 {
+            break;
+        }
+    }
 }
 
 fn constants() {
@@ -25,13 +44,21 @@ fn constants() {
     }
 }
 
+fn if_statement() {
+    let a = 0;
+    if i32::pow(a, 0) == 1 {
+        println!("it is true");
+    } else if a == 5 {
+        println!("shouldn't be called");
+    }
+    let some_value = if a == 0 { "ok" } else { "not ok" };
+    println!("how is going? - {}", some_value);
+}
 
 fn scope_and_shadowing() {
     let a = 0;
 
-    if i32::pow(a, 0) == 1 {
-        println!("it is true");
-    }
+    println!("initial a = {}", a);
 
     let a = 2; //overriding
 
