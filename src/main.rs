@@ -15,7 +15,22 @@ fn main() {
     // if_statement()
     // sh::stack_and_heap();
     // while_loop();
-    for_loop();
+    // for_loop();
+    country_matcher()
+}
+
+fn country_matcher(){
+    let country_code = 46;
+
+    let country = match country_code {
+        44 => "UK",
+        46 => "Sweeden",
+        7 => "Russia",
+        1..=1000 => "Unknown",
+        _ => "invalid"
+    };
+
+    println!("the country with code {} is {}", country_code, country)
 }
 
 fn while_loop() {
@@ -38,6 +53,10 @@ fn while_loop() {
 
 fn for_loop() {
     for x in 1..11 { // [1, 11)
+        println!("x = {}", x);
+    }
+
+    for x in 1..=5 { // [1, 5]
         println!("x = {}", x);
     }
 
