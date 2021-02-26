@@ -20,7 +20,24 @@ fn main() {
     // country_matcher();
     // locked_state();
     // enums();
-    unions();
+    // unions();
+    options();
+}
+
+fn options() {
+    let x = 3.0;
+    let y = 2.0;
+
+    let result = if y != 0.0 { Some(x / y) } else { None };
+
+    match result {
+        Some(z) => println!("{}/{}={}", x, y, z),
+        None => println!("cannot divide by zero")
+    }
+
+    if let Some(z) = result {
+        println!("result = {}", z)
+    }
 }
 
 fn unions() {
@@ -34,22 +51,22 @@ fn unions() {
     let value = unsafe { iof.i };
     println!("iof.i = {}", value);
 
-    fn process_value(iof: IntOrFloat){
+    fn process_value(iof: IntOrFloat) {
         unsafe {
             match iof {
-                IntOrFloat {i: 42} => {
+                IntOrFloat { i: 42 } => {
                     println!("meaning of life value");
                 }
 
-                IntOrFloat{ f }=>{
+                IntOrFloat { f } => {
                     println!("value = {}", f)
                 }
             }
         }
     }
 
-    process_value(IntOrFloat{i:42});
-    process_value(IntOrFloat{i:5});
+    process_value(IntOrFloat { i: 42 });
+    process_value(IntOrFloat { i: 5 });
 }
 
 fn enums() {
