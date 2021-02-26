@@ -18,8 +18,32 @@ fn main() {
     // while_loop();
     // for_loop();
     // country_matcher();
-    locked_state();
+    // locked_state();
+    enums();
 }
+
+fn enums() {
+    enum Color {
+        Red,
+        Green,
+        Blue,
+        RgbColor(u8, u8, u8),
+        CmykColor { cyan: u8, magenta: u8, yellow: u8, black: u8 },
+    }
+
+    let c: Color = Color::CmykColor { cyan: 211, magenta: 224, yellow: 12, black: 255 };
+
+    match c {
+        Color::Red => println!("r"),
+        Color::Green => println!("g"),
+        Color::Blue => println!("b"),
+        Color::RgbColor(0, 0, 0)
+        | Color::CmykColor { cyan: _, magenta: _, yellow: _, black: 255 } => println!("black"),
+        Color::RgbColor(r, g, b) => println!("rgb({},{},{})", r, g, b),
+        _ => ()
+    }
+}
+
 
 fn locked_state() {
     enum State {
@@ -52,13 +76,13 @@ fn locked_state() {
                     state = State::Failed;
                 }
             }
-            State::Failed =>{
+            State::Failed => {
                 println!("FAILED");
                 entry.clear();
                 state = State::Locked;
                 continue;
             }
-            State::Unlocked =>{
+            State::Unlocked => {
                 println!("UNLOCKED!");
                 break;
             }
