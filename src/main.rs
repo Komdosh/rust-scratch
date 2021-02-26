@@ -19,7 +19,37 @@ fn main() {
     // for_loop();
     // country_matcher();
     // locked_state();
-    enums();
+    // enums();
+    unions();
+}
+
+fn unions() {
+    union IntOrFloat {
+        i: i32,
+        f: f32,
+    }
+    let mut iof = IntOrFloat { i: 123 };
+    iof.i = 234;
+
+    let value = unsafe { iof.i };
+    println!("iof.i = {}", value);
+
+    fn process_value(iof: IntOrFloat){
+        unsafe {
+            match iof {
+                IntOrFloat {i: 42} => {
+                    println!("meaning of life value");
+                }
+
+                IntOrFloat{ f }=>{
+                    println!("value = {}", f)
+                }
+            }
+        }
+    }
+
+    process_value(IntOrFloat{i:42});
+    process_value(IntOrFloat{i:5});
 }
 
 fn enums() {
