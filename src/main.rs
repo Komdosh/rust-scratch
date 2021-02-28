@@ -21,7 +21,40 @@ fn main() {
     // locked_state();
     // enums();
     // unions();
-    options();
+    // options();
+    arrays();
+}
+
+
+
+fn arrays() {
+    let mut a: [i32; 5] = [0, 1, 2, 3, 4];
+
+    println!("a has {} items, first is {}", a.len(), a[0]);
+    a[0] = 128;
+    println!("now a[0]={}", a[0]);
+
+    println!("whole a={:?}", a);
+    if a != [0, 1, 2, 3, 4] {
+        println!("doesn't match");
+    }
+    if a == [128, 1, 2, 3, 4] {
+        println!("rust array matching works")
+    }
+
+    let b = [1u16; 10];
+    for i in 0..b.len() {
+        print!("{}", b[i]);
+    }
+    println!();
+
+    println!("b took up {} bytes", mem::size_of_val(&b));
+
+    let mtx: [[f32; 3];2] = [
+        [1.0, 0.0, 0.0],
+        [0.0, 2.0, 0.0]
+    ];
+    println!("{:?}", mtx);
 }
 
 fn options() {
