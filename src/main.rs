@@ -22,10 +22,23 @@ fn main() {
     // enums();
     // unions();
     // options();
-    arrays();
+    // arrays();
+    slices()
 }
 
+fn use_slice(slice: &mut[i32]) {
+    println!("first item = {}, len = {}", slice[0], slice.len());
+    slice[0] = 128;
+}
 
+fn slices() {
+    let mut data = [0, 1, 2, 3, 4];
+
+    use_slice(&mut data[1..4]);
+    println!("{:?}", data);
+    use_slice(&mut data);
+    println!("{:?}", data);
+}
 
 fn arrays() {
     let mut a: [i32; 5] = [0, 1, 2, 3, 4];
@@ -50,7 +63,7 @@ fn arrays() {
 
     println!("b took up {} bytes", mem::size_of_val(&b));
 
-    let mtx: [[f32; 3];2] = [
+    let mtx: [[f32; 3]; 2] = [
         [1.0, 0.0, 0.0],
         [0.0, 2.0, 0.0]
     ];
