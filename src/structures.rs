@@ -2,13 +2,13 @@
 
 use core::mem;
 
-struct Point{
-    x: f64,
-    y: f64
+struct Point<T> {
+    x: T,
+    y: T,
 }
 
-fn origin()->Point{
-    Point{x: 0.0, y: 0.0}
+fn origin() -> Point<f64> {
+    Point { x: 0.0, y: 0.0 }
 }
 
 pub fn stack_and_heap() {
@@ -51,7 +51,7 @@ pub(crate) fn unions() {
     process_value(IntOrFloat { i: 5 });
 }
 
-fn use_slice(slice: &mut[i32]) {
+fn use_slice(slice: &mut [i32]) {
     println!("first item = {}, len = {}", slice[0], slice.len());
     slice[0] = 128;
 }
@@ -93,4 +93,45 @@ pub(crate) fn arrays() {
         [0.0, 2.0, 0.0]
     ];
     println!("{:?}", mtx);
+}
+
+pub(crate) fn tuples() {
+    let x = 3;
+    let y = 4;
+    let sp = sum_and_product(x, y);
+    println!("sp = {:?}", sp);
+    println!("{0}+{1} = {2}, {0}*{1} = {3}", x, y, sp.0, sp.1);
+
+    // destructuring
+    let (a, b) = sp;
+    println!("a = {}, b = {}", a, b);
+    let sp2 = sum_and_product(4, 7);
+    let combined = (sp, sp2);
+    println!("{:?}", combined);
+
+    println!("last elem = {}", (combined.1).1);
+
+    let ((c, d), (e, f)) = combined;
+    println!("c = {}, d = {}, e = {}, f = {}", c, d, e, f);
+    let multiple_types = (true, 42.0, -1i8);
+    println!("{:?}", multiple_types);
+
+    let meaning_of_life = (42, );
+    println!("{:?}", meaning_of_life)
+}
+
+fn sum_and_product(x: i32, y: i32) -> (i32, i32) {
+    return (x + y, x * y);
+}
+
+struct Line<T> {
+    start: Point<T>,
+    end: Point<T>,
+}
+
+pub(crate) fn generics() {
+    let a: Point<f64> = Point { x: 0.0, y: 16f64 };
+    let b = Point { x: 1.2, y: 3.4 };
+
+    let my_line = Line { start: a, end: b };
 }

@@ -1,13 +1,11 @@
 #![allow(dead_code)]
 
-use core::mem;
-use std::io::stdin;
-
 mod structures;
 mod primitives;
 mod conditions;
 mod loops;
 mod scopes;
+mod pm;
 
 
 fn main() {
@@ -24,8 +22,12 @@ fn main() {
     // structures::unions();
     // conditions::options();
     // structures::arrays();
-    structures::slices();
+    // structures::slices();
+    // structures::tuples();
+    // pm::pattern_matching();
+    structures::generics();
 }
+
 
 
 
