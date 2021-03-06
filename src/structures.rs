@@ -135,3 +135,41 @@ pub(crate) fn generics() {
 
     let my_line = Line { start: a, end: b };
 }
+
+
+pub fn vectors() {
+    let mut a = Vec::new();
+    a.push(0);
+    a.push(1);
+    a.push(2);
+
+    println!("a = {:?}", a);
+
+    a.push(42);
+
+    println!("a = {:?}", a);
+
+    let idx: usize = 3;
+
+    a[idx] = idx;
+    println!("a[{}] = {}", idx, a[idx]);
+
+    match a.get(6) {
+        Some(x) => println!("a[6] = {}", x),
+        None => println!("error, no such element")
+    }
+
+    for x in &a {
+        println!("{}", x);
+    }
+
+    a.push(3);
+    println!("a = {:?}", a);
+
+    let last_elem = a.pop();
+    println!("last item is {:?}, a = {:?}", last_elem, a);
+
+    while let Some(x) = a.pop() {
+        println!("{}", x);
+    }
+}

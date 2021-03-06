@@ -25,7 +25,8 @@ fn main() {
     // structures::slices();
     // structures::tuples();
     // pm::pattern_matching();
-    structures::generics();
+    // structures::generics();
+    structures::vectors();
 }
 
 
