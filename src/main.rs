@@ -26,7 +26,9 @@ fn main() {
     // structures::tuples();
     // pm::pattern_matching();
     // structures::generics();
-    structures::vectors();
+    // structures::vectors();
+    structures::hash_map();
+    // structures::hash_set();
 }
 
 
