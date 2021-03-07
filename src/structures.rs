@@ -1,11 +1,18 @@
 #![allow(dead_code)]
 
-use core::mem;
-use std::collections::HashMap;
+use core::{mem, fmt};
+use std::collections::{HashMap, HashSet};
+use std::fmt::Display;
 
-struct Point<T> {
+struct Point<T : Display> {
     x: T,
     y: T,
+}
+
+impl <T : Display> fmt::Display for Point<T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
 }
 
 fn origin() -> Point<f64> {
@@ -125,7 +132,7 @@ fn sum_and_product(x: i32, y: i32) -> (i32, i32) {
     return (x + y, x * y);
 }
 
-struct Line<T> {
+struct Line<T : Display> {
     start: Point<T>,
     end: Point<T>,
 }
@@ -135,6 +142,7 @@ pub(crate) fn generics() {
     let b = Point { x: 1.2, y: 3.4 };
 
     let my_line = Line { start: a, end: b };
+    println!("Line(({}); ({}))", my_line.start, my_line.end);
 }
 
 
@@ -200,5 +208,51 @@ pub(crate) fn hash_map() {
 }
 
 pub fn hash_set(){
+    let mut greeks = HashSet::new();
+
+    greeks.insert("gamma");
+    greeks.insert("delta");
+
+    println!("{:?}", greeks);
+    greeks.insert("delta");
+
+    println!("{:?}", greeks);
+
+    let added_vega= greeks.insert("vega");
+    if added_vega {
+        println!("we added vega!")
+    }
+    let added_vega_twice = greeks.insert("vega");
+    if added_vega_twice {
+        println!("vega was not added!")
+    }
+
+    if !greeks.contains("kappa"){
+        println!("we don't have kappa");
+    }
+
+    let removed = greeks.remove("delta");
+    if removed{
+        println!("we removed delta");
+    }
+    println!("{:?}", greeks);
+
+    let _1_5: HashSet<_> = (1..=5).collect();
+    let _6_10: HashSet<_> = (6..=10).collect();
+    let _1_10: HashSet<_> = (1..=10).collect();
+    let _2_8: HashSet<_> = (2..=8).collect();
+
+    // subset
+    println!("is {:?} a subset of {:?}? - {}", _2_8, _1_10, _2_8.is_subset(&_1_10));
+
+    // disjoint
+    println!("is {:?} a disjoint of {:?}? - {}", _1_5, _6_10, _1_5.is_disjoint(&_6_10));
+
+    //union, intersection
+    println!("items in either {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.union(&_6_10));
+    println!("items in both {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.intersection(&_6_10));
+
+    println!("difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.difference(&_6_10));
+    println!("symmetric difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.symmetric_difference(&_6_10));
 
 }
