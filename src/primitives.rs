@@ -63,3 +63,33 @@ pub(crate) fn enums() {
         _ => ()
     }
 }
+
+pub(crate) fn strings() {
+    let hello: &'static str = "hello there!";
+
+    for c in hello.chars().rev() {
+        println!("{}", c)
+    }
+
+    if let Some(first_char) = hello.chars().nth(0) {
+        println!("first letter is {}", first_char);
+    }
+
+    let mut letters = String::new();
+    let mut a = 'a' as u8;
+    while a <= ('z' as u8) {
+        letters.push(a as char);
+        letters.push_str(",");
+        a += 1;
+    }
+
+    println!("{}", letters);
+    let deref_letters:&str = &letters;
+    let concat = letters.to_string() + deref_letters + "abc";
+    println!("concat: {}", concat);
+    let mut hello_world = String::from("hello") + " " + &String::from("world");
+    hello_world.remove(0);
+    hello_world.push_str("!");
+    println!("{}", hello_world.replace("ello", "goodbye"));
+
+}

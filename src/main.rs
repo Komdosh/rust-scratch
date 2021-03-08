@@ -28,7 +28,8 @@ fn main() {
     // structures::generics();
     // structures::vectors();
     // structures::hash_map();
-    structures::hash_set();
+    // structures::hash_set();
+    primitives::strings();
 }
 
 
