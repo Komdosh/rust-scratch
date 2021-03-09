@@ -6,6 +6,7 @@ mod conditions;
 mod loops;
 mod scopes;
 mod pm;
+mod number_guessing;
 
 
 fn main() {
@@ -29,7 +30,8 @@ fn main() {
     // structures::vectors();
     // structures::hash_map();
     // structures::hash_set();
-    primitives::strings();
+    // primitives::strings();
+    number_guessing::start_game();
 }
 
 
