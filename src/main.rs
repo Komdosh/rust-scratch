@@ -7,6 +7,7 @@ mod loops;
 mod scopes;
 mod pm;
 mod number_guessing;
+mod functions;
 
 
 fn main() {
@@ -31,7 +32,8 @@ fn main() {
     // structures::hash_map();
     // structures::hash_set();
     // primitives::strings();
-    number_guessing::start_game();
+    // number_guessing::start_game();
+    functions::functions();
 }
 
 
