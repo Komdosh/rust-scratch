@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 
-use core::{mem, fmt};
+use core::{fmt, mem};
 use std::collections::{HashMap, HashSet};
 use std::fmt::Display;
 
-struct Point<T : Display> {
+struct Point<T: Display> {
     x: T,
     y: T,
 }
 
-impl <T : Display> fmt::Display for Point<T> {
+impl<T: Display> fmt::Display for Point<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}, {}", self.x, self.y)
     }
@@ -132,9 +132,17 @@ fn sum_and_product(x: i32, y: i32) -> (i32, i32) {
     return (x + y, x * y);
 }
 
-struct Line<T : Display> {
-    start: Point<T>,
-    end: Point<T>,
+struct Line {
+    start: Point<f64>,
+    end: Point<f64>,
+}
+
+impl Line {
+    fn len(&self) -> f64 {
+        let dx = self.end.x;
+        let dy = self.end.y;
+        (dx * dx + dy * dy).sqrt()
+    }
 }
 
 pub(crate) fn generics() {
@@ -143,6 +151,7 @@ pub(crate) fn generics() {
 
     let my_line = Line { start: a, end: b };
     println!("Line(({}); ({}))", my_line.start, my_line.end);
+    println!("length = {}", my_line.len());
 }
 
 
@@ -207,7 +216,7 @@ pub(crate) fn hash_map() {
     println!("{:?}", shapes);
 }
 
-pub fn hash_set(){
+pub fn hash_set() {
     let mut greeks = HashSet::new();
 
     greeks.insert("gamma");
@@ -218,7 +227,7 @@ pub fn hash_set(){
 
     println!("{:?}", greeks);
 
-    let added_vega= greeks.insert("vega");
+    let added_vega = greeks.insert("vega");
     if added_vega {
         println!("we added vega!")
     }
@@ -227,12 +236,12 @@ pub fn hash_set(){
         println!("vega was not added!")
     }
 
-    if !greeks.contains("kappa"){
+    if !greeks.contains("kappa") {
         println!("we don't have kappa");
     }
 
     let removed = greeks.remove("delta");
-    if removed{
+    if removed {
         println!("we removed delta");
     }
     println!("{:?}", greeks);
@@ -254,5 +263,4 @@ pub fn hash_set(){
 
     println!("difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.difference(&_6_10));
     println!("symmetric difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.symmetric_difference(&_6_10));
-
 }

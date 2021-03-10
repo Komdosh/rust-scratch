@@ -33,7 +33,7 @@ fn main() {
     // structures::hash_set();
     // primitives::strings();
     // number_guessing::start_game();
-    functions::functions();
+    // functions::functions();
 }
 
 
