@@ -34,6 +34,7 @@ fn main() {
     // primitives::strings();
     // number_guessing::start_game();
     // functions::functions();
+    functions::closures();
 }
 
 
