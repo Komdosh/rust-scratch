@@ -50,8 +50,41 @@ pub(crate) fn closures() {
     // &T: by ref
     // &mut &: by ref mutable
 
-    let plus_three = |x:&mut i32| *x += 3;
+    let plus_three = |x: &mut i32| *x += 3;
     let mut mut_val = 5;
     plus_three(&mut mut_val);
     println!("mut_val = {}", mut_val);
+}
+
+fn is_even(x: u32) -> bool {
+    x % 2 == 0
+}
+
+fn greater_than(limit: u32) -> impl Fn(u32) -> bool {
+    move |y| y > limit
+}
+
+pub(crate) fn higher_order_fn() {
+    let limit = 500;
+    let mut sum = 0;
+
+    // let above_limit = |y| y > limit;
+    let above_limit = greater_than(limit);
+
+    for i in 0.. {
+        let isq = i * i;
+        if above_limit(isq) {
+            break;
+        } else if is_even(isq) {
+            sum += isq;
+        }
+    }
+    println!("loop sum = {}", sum);
+
+    let sum2 = (0..)
+        .map(|x| x*x)
+        .take_while(|&x| x<limit)
+        .filter(|x| is_even(*x))
+        .fold(0, |sum, x| sum + x);
+    println!("higher order sum = {}", sum2);
 }
