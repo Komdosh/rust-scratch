@@ -1,13 +1,13 @@
 #![allow(dead_code)]
 
-use core::mem;
-use std::io::stdin;
-
 mod structures;
 mod primitives;
 mod conditions;
 mod loops;
 mod scopes;
+mod pm;
+mod number_guessing;
+mod functions;
 
 
 fn main() {
@@ -24,8 +24,23 @@ fn main() {
     // structures::unions();
     // conditions::options();
     // structures::arrays();
-    structures::slices();
+    // structures::slices();
+    // structures::tuples();
+    // pm::pattern_matching();
+    // structures::generics();
+    // structures::vectors();
+    // structures::hash_map();
+    // structures::hash_set();
+    // primitives::strings();
+    // number_guessing::start_game();
+    // functions::functions();
+    // functions::closures();
+    // functions::higher_order_fn();
+    // structures::traits();
+    structures::trait_parameters();
 }
+
+
 
 
 

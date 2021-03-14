@@ -1,14 +1,22 @@
 #![allow(dead_code)]
 
-use core::mem;
+use core::{fmt, mem};
+use std::collections::{HashMap, HashSet};
+use std::fmt::{Debug, Display};
 
-struct Point{
-    x: f64,
-    y: f64
+struct Point<T: Display> {
+    x: T,
+    y: T,
 }
 
-fn origin()->Point{
-    Point{x: 0.0, y: 0.0}
+impl<T: Display> fmt::Display for Point<T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}, {}", self.x, self.y)
+    }
+}
+
+fn origin() -> Point<f64> {
+    Point { x: 0.0, y: 0.0 }
 }
 
 pub fn stack_and_heap() {
@@ -51,7 +59,7 @@ pub(crate) fn unions() {
     process_value(IntOrFloat { i: 5 });
 }
 
-fn use_slice(slice: &mut[i32]) {
+fn use_slice(slice: &mut [i32]) {
     println!("first item = {}, len = {}", slice[0], slice.len());
     slice[0] = 128;
 }
@@ -93,4 +101,272 @@ pub(crate) fn arrays() {
         [0.0, 2.0, 0.0]
     ];
     println!("{:?}", mtx);
+}
+
+pub(crate) fn tuples() {
+    let x = 3;
+    let y = 4;
+    let sp = sum_and_product(x, y);
+    println!("sp = {:?}", sp);
+    println!("{0}+{1} = {2}, {0}*{1} = {3}", x, y, sp.0, sp.1);
+
+    // destructuring
+    let (a, b) = sp;
+    println!("a = {}, b = {}", a, b);
+    let sp2 = sum_and_product(4, 7);
+    let combined = (sp, sp2);
+    println!("{:?}", combined);
+
+    println!("last elem = {}", (combined.1).1);
+
+    let ((c, d), (e, f)) = combined;
+    println!("c = {}, d = {}, e = {}, f = {}", c, d, e, f);
+    let multiple_types = (true, 42.0, -1i8);
+    println!("{:?}", multiple_types);
+
+    let meaning_of_life = (42, );
+    println!("{:?}", meaning_of_life)
+}
+
+fn sum_and_product(x: i32, y: i32) -> (i32, i32) {
+    return (x + y, x * y);
+}
+
+struct Line {
+    start: Point<f64>,
+    end: Point<f64>,
+}
+
+impl Line {
+    fn len(&self) -> f64 {
+        let dx = self.end.x;
+        let dy = self.end.y;
+        (dx * dx + dy * dy).sqrt()
+    }
+}
+
+pub(crate) fn generics() {
+    let a: Point<f64> = Point { x: 0.0, y: 16f64 };
+    let b = Point { x: 1.2, y: 3.4 };
+
+    let my_line = Line { start: a, end: b };
+    println!("Line(({}); ({}))", my_line.start, my_line.end);
+    println!("length = {}", my_line.len());
+}
+
+
+pub fn vectors() {
+    let mut a = Vec::new();
+    a.push(0);
+    a.push(1);
+    a.push(2);
+
+    println!("a = {:?}", a);
+
+    a.push(42);
+
+    println!("a = {:?}", a);
+
+    let idx: usize = 3;
+
+    a[idx] = idx;
+    println!("a[{}] = {}", idx, a[idx]);
+
+    match a.get(6) {
+        Some(x) => println!("a[6] = {}", x),
+        None => println!("error, no such element")
+    }
+
+    for x in &a {
+        println!("{}", x);
+    }
+
+    a.push(3);
+    println!("a = {:?}", a);
+
+    let last_elem = a.pop();
+    println!("last item is {:?}, a = {:?}", last_elem, a);
+
+    while let Some(x) = a.pop() {
+        println!("{}", x);
+    }
+}
+
+pub(crate) fn hash_map() {
+    let mut shapes = HashMap::new();
+    shapes.insert(String::from("triangle"), 3);
+    shapes.insert(String::from("square"), 4);
+
+    println!("a square has {} sides", shapes["square".into()]);
+
+    for (key, value) in &shapes {
+        println!("{}: {}", key, value);
+    }
+
+    shapes.insert("square".into(), 5);
+    println!("{:?}", shapes);
+
+    shapes.entry("circle".into()).or_insert(1);
+
+    {
+        let actual = shapes.entry("circle".into()).or_insert(2);
+        *actual = 0;
+    }
+
+    println!("{:?}", shapes);
+}
+
+pub fn hash_set() {
+    let mut greeks = HashSet::new();
+
+    greeks.insert("gamma");
+    greeks.insert("delta");
+
+    println!("{:?}", greeks);
+    greeks.insert("delta");
+
+    println!("{:?}", greeks);
+
+    let added_vega = greeks.insert("vega");
+    if added_vega {
+        println!("we added vega!")
+    }
+    let added_vega_twice = greeks.insert("vega");
+    if added_vega_twice {
+        println!("vega was not added!")
+    }
+
+    if !greeks.contains("kappa") {
+        println!("we don't have kappa");
+    }
+
+    let removed = greeks.remove("delta");
+    if removed {
+        println!("we removed delta");
+    }
+    println!("{:?}", greeks);
+
+    let _1_5: HashSet<_> = (1..=5).collect();
+    let _6_10: HashSet<_> = (6..=10).collect();
+    let _1_10: HashSet<_> = (1..=10).collect();
+    let _2_8: HashSet<_> = (2..=8).collect();
+
+    // subset
+    println!("is {:?} a subset of {:?}? - {}", _2_8, _1_10, _2_8.is_subset(&_1_10));
+
+    // disjoint
+    println!("is {:?} a disjoint of {:?}? - {}", _1_5, _6_10, _1_5.is_disjoint(&_6_10));
+
+    //union, intersection
+    println!("items in either {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.union(&_6_10));
+    println!("items in both {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.intersection(&_6_10));
+
+    println!("difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.difference(&_6_10));
+    println!("symmetric difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.symmetric_difference(&_6_10));
+}
+
+
+pub fn traits() {
+    trait Animal {
+        fn create(name: &'static str) -> Self;
+        fn name(&self) -> &'static str;
+
+        fn talk(&self) {
+            println!("{} cannot talk", self.name());
+        }
+    }
+
+    struct Cat {
+        name: &'static str
+    }
+
+    struct Dog {
+        name: &'static str
+    }
+
+    impl Animal for Cat {
+        fn create(name: &'static str) -> Cat {
+            Cat { name }
+        }
+
+        fn name(&self) -> &'static str {
+            self.name
+        }
+
+        fn talk(&self) {
+            println!("{} says meow", self.name)
+        }
+    }
+
+    impl Animal for Dog {
+        fn create(name: &'static str) -> Dog {
+            Dog { name }
+        }
+
+        fn name(&self) -> &'static str {
+            self.name
+        }
+    }
+
+    let cat = Cat::create("Mr. Whiskers");
+    cat.talk();
+    let dog: Dog = Animal::create("Mint Butler");
+    dog.talk();
+
+
+    trait Summable<T> {
+        fn sum(&self) -> T;
+    }
+
+    impl Summable<i32> for Vec<i32> {
+        fn sum(&self) -> i32 {
+            let mut result: i32 = 0;
+            for x in self {
+                result += *x;
+            }
+            return result;
+        }
+    }
+
+    let a = vec![1, 2, 3];
+    println!("sum = {}", a.sum())
+}
+
+pub(crate) fn trait_parameters() {
+    #[derive(Debug)]
+    struct Circle {
+        radius: f64
+    }
+    #[derive(Debug)]
+    struct Square {
+        side: f64
+    }
+
+    trait Shape {
+        fn area(&self) -> f64;
+    }
+
+    impl Shape for Square {
+        fn area(&self) -> f64 {
+            self.side * self.side
+        }
+    }
+
+    impl Shape for Circle {
+        fn area(&self) -> f64 {
+            self.radius * self.radius * std::f64::consts::PI
+        }
+    }
+
+    // fn print_info(shape: impl Shape + Debug) {
+    // fn print_info<T: Shape+Debug>(shape: T) {
+    fn print_info<T>(shape: T)
+        where T: Shape + Debug
+    {
+        println!("{:?}", shape);
+        println!("The area is {}", shape.area())
+    }
+
+    let circle = Circle { radius: 2.0 };
+    print_info(circle);
 }
