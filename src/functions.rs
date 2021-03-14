@@ -1,3 +1,5 @@
+
+
 pub(crate) fn functions() {
     print_value(32);
 
@@ -49,6 +51,8 @@ pub(crate) fn closures() {
     // T: by value
     // &T: by ref
     // &mut &: by ref mutable
+    *borrow_two += 1;
+    println!("now change borrow_two = {}", borrow_two);
 
     let plus_three = |x: &mut i32| *x += 3;
     let mut mut_val = 5;

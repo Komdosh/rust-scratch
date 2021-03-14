@@ -57,7 +57,7 @@ pub(crate) fn enums() {
         Color::Green => println!("g"),
         Color::Blue => println!("b"),
         Color::RgbColor(0, 0, 0)
-        | Color::CmykColor { cyan: _, magenta: _, yellow: _, black: 255 }
+        //| Color::CmykColor { cyan: _, magenta: _, yellow: _, black: 255 }
         | Color::CmykColor { black: 255, .. } => println!("black"),
         Color::RgbColor(r, g, b) => println!("rgb({},{},{})", r, g, b),
         _ => ()

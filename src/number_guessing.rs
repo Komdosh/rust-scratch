@@ -4,7 +4,7 @@ use std::io::stdin;
 use rand::Rng;
 
 pub(crate) fn start_game() {
-    let number = rand::thread_rng().gen_range((1..101));
+    let number = rand::thread_rng().gen_range(1..101);
 
     loop {
         println!("Try to guess a number between 1 and 100: ");
