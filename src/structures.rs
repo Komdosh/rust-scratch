@@ -2,7 +2,7 @@
 
 use core::{fmt, mem};
 use std::collections::{HashMap, HashSet};
-use std::fmt::Display;
+use std::fmt::{Debug, Display};
 
 struct Point<T: Display> {
     x: T,
@@ -314,20 +314,59 @@ pub fn traits() {
     dog.talk();
 
 
-    trait Summable<T>{
+    trait Summable<T> {
         fn sum(&self) -> T;
     }
 
-    impl Summable<i32> for Vec<i32>{
+    impl Summable<i32> for Vec<i32> {
         fn sum(&self) -> i32 {
             let mut result: i32 = 0;
-            for x in self{
+            for x in self {
                 result += *x;
             }
-            return result
+            return result;
         }
     }
 
-    let a = vec![1,2,3];
+    let a = vec![1, 2, 3];
     println!("sum = {}", a.sum())
+}
+
+pub(crate) fn trait_parameters() {
+    #[derive(Debug)]
+    struct Circle {
+        radius: f64
+    }
+    #[derive(Debug)]
+    struct Square {
+        side: f64
+    }
+
+    trait Shape {
+        fn area(&self) -> f64;
+    }
+
+    impl Shape for Square {
+        fn area(&self) -> f64 {
+            self.side * self.side
+        }
+    }
+
+    impl Shape for Circle {
+        fn area(&self) -> f64 {
+            self.radius * self.radius * std::f64::consts::PI
+        }
+    }
+
+    // fn print_info(shape: impl Shape + Debug) {
+    // fn print_info<T: Shape+Debug>(shape: T) {
+    fn print_info<T>(shape: T)
+        where T: Shape + Debug
+    {
+        println!("{:?}", shape);
+        println!("The area is {}", shape.area())
+    }
+
+    let circle = Circle { radius: 2.0 };
+    print_info(circle);
 }

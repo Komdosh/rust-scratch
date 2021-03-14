@@ -36,7 +36,8 @@ fn main() {
     // functions::functions();
     // functions::closures();
     // functions::higher_order_fn();
-    structures::traits();
+    // structures::traits();
+    structures::trait_parameters();
 }
 
 
