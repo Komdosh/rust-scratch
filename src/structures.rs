@@ -264,3 +264,70 @@ pub fn hash_set() {
     println!("difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.difference(&_6_10));
     println!("symmetric difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.symmetric_difference(&_6_10));
 }
+
+
+pub fn traits() {
+    trait Animal {
+        fn create(name: &'static str) -> Self;
+        fn name(&self) -> &'static str;
+
+        fn talk(&self) {
+            println!("{} cannot talk", self.name());
+        }
+    }
+
+    struct Cat {
+        name: &'static str
+    }
+
+    struct Dog {
+        name: &'static str
+    }
+
+    impl Animal for Cat {
+        fn create(name: &'static str) -> Cat {
+            Cat { name }
+        }
+
+        fn name(&self) -> &'static str {
+            self.name
+        }
+
+        fn talk(&self) {
+            println!("{} says meow", self.name)
+        }
+    }
+
+    impl Animal for Dog {
+        fn create(name: &'static str) -> Dog {
+            Dog { name }
+        }
+
+        fn name(&self) -> &'static str {
+            self.name
+        }
+    }
+
+    let cat = Cat::create("Mr. Whiskers");
+    cat.talk();
+    let dog: Dog = Animal::create("Mint Butler");
+    dog.talk();
+
+
+    trait Summable<T>{
+        fn sum(&self) -> T;
+    }
+
+    impl Summable<i32> for Vec<i32>{
+        fn sum(&self) -> i32 {
+            let mut result: i32 = 0;
+            for x in self{
+                result += *x;
+            }
+            return result
+        }
+    }
+
+    let a = vec![1,2,3];
+    println!("sum = {}", a.sum())
+}

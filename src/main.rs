@@ -35,8 +35,10 @@ fn main() {
     // number_guessing::start_game();
     // functions::functions();
     // functions::closures();
-    functions::higher_order_fn();
+    // functions::higher_order_fn();
+    structures::traits();
 }
+
 
 
 
