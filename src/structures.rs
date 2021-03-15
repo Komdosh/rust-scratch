@@ -370,3 +370,24 @@ pub(crate) fn trait_parameters() {
     let circle = Circle { radius: 2.0 };
     print_info(circle);
 }
+
+pub(crate) fn trait_into() {
+    struct Person {
+        name: String
+    }
+
+    impl Person {
+        /*        fn new(name: &str) -> Person{
+                    Person {name: name.to_string()}
+                }*/
+
+        fn new<S: Into<String>>(name: S) -> Person {
+            Person { name: name.into() }
+        }
+    }
+
+    let john = Person::new("John");
+
+    let name: String = "Jane".to_string();
+    let jane = Person::new(name/*.as_ref()*/);
+}
