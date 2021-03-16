@@ -8,6 +8,7 @@ mod scopes;
 mod pm;
 mod number_guessing;
 mod functions;
+mod traits;
 
 
 fn main() {
@@ -45,9 +46,10 @@ fn main() {
     // structures::vectors();
     // structures::hash_map();
     // structures::hash_set();
-    // structures::traits();
-    // structures::trait_parameters();
-    structures::trait_into();
+    // traits::traits();
+    // traits::trait_parameters();
+    // traits::trait_into();
+    traits::trait_drop();
 }
 
 
