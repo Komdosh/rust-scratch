@@ -9,6 +9,7 @@ mod pm;
 mod number_guessing;
 mod functions;
 mod traits;
+mod operators;
 
 
 fn main() {
@@ -46,10 +47,13 @@ fn main() {
     // structures::vectors();
     // structures::hash_map();
     // structures::hash_set();
+
     // traits::traits();
     // traits::trait_parameters();
     // traits::trait_into();
-    traits::trait_drop();
+    // traits::trait_drop();
+
+    operators::overloading();
 }
 
 

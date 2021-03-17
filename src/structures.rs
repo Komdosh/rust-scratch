@@ -2,7 +2,7 @@
 
 use core::{fmt, mem};
 use std::collections::{HashMap, HashSet};
-use std::fmt::{Debug, Display};
+use std::fmt::{Display};
 
 struct Point<T: Display> {
     x: T,
