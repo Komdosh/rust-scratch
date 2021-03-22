@@ -10,11 +10,10 @@ mod number_guessing;
 mod functions;
 mod traits;
 mod operators;
+mod dispatch;
 
 
 fn main() {
-
-
     // primitives::data_types_playground();
     // primitives::constants();
     // primitives::strings();
@@ -53,8 +52,11 @@ fn main() {
     // traits::trait_into();
     // traits::trait_drop();
 
-    operators::overloading();
+    // operators::overloading();
+
+    dispatch::static_dispatch();
 }
+
 
 
 
