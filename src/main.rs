@@ -54,7 +54,8 @@ fn main() {
 
     // operators::overloading();
 
-    dispatch::static_dispatch();
+    // dispatch::static_dispatch();
+    dispatch::dynamic_dispatch();
 }
 
 

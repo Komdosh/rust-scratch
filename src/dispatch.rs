@@ -28,6 +28,15 @@ pub(crate) fn static_dispatch(){
     let integer = 123;
     let str = "hello".to_string();
 
-    print_it_too(&integer);
+    print_it(integer);
     print_it(str);
+}
+
+pub(crate) fn dynamic_dispatch(){
+
+    let integer = 123;
+    let str = "hello".to_string();
+
+    print_it_too(&integer);
+    print_it_too(&str);
 }
