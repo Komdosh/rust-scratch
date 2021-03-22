@@ -19,11 +19,15 @@ fn print_it<T: Printable>(variable: T){ // compile time type
     println!("{}", variable.format())
 } // monomorphisation
 
+fn print_it_too(variable: &dyn Printable){
+    println!("{}", variable.format());
+}
+
 pub(crate) fn static_dispatch(){
 
     let integer = 123;
     let str = "hello".to_string();
 
-    print_it(integer);
+    print_it_too(&integer);
     print_it(str);
 }
