@@ -11,6 +11,7 @@ mod functions;
 mod traits;
 mod operators;
 mod dispatch;
+mod memory_fundamentals;
 
 
 fn main() {
@@ -46,7 +47,7 @@ fn main() {
     // structures::vectors();
     // structures::hash_map();
     // structures::hash_set();
-    structures::vector_objects();
+    // structures::vector_objects();
 
     // traits::traits();
     // traits::trait_parameters();
@@ -58,6 +59,8 @@ fn main() {
     // dispatch::static_dispatch();
     // dispatch::dynamic_dispatch();
     // dispatch::dispatch_in_action();
+
+    memory_fundamentals::ownership();
 }
 
 
