@@ -60,7 +60,8 @@ fn main() {
     // dispatch::dynamic_dispatch();
     // dispatch::dispatch_in_action();
 
-    memory_fundamentals::ownership();
+    // memory_fundamentals::ownership();
+    memory_fundamentals::borrowing();
 }
 
 

@@ -26,3 +26,28 @@ pub(crate) fn ownership() {
 }
 
 
+pub(crate) fn borrowing() {
+    let v = vec![1, 2, 3];
+
+
+    let print_vector = |x: &Vec<i32>| {
+        println!("{:?}", x);
+        // x.push(4);
+    };
+
+    print_vector(&v); // borrow v for a while
+    println!("{:?}", v);
+
+    let mut a = 40;
+    {
+        let b = &mut a;
+        *b += 2;
+    }
+    println!("a = {}", a);
+
+    let mut z = vec![3,2,1];
+
+    for i in &z{
+        println!("i = {}", i);
+    }
+}
