@@ -120,10 +120,10 @@ pub(crate) fn trait_into() {
         }
     }
 
-    let john = Person::new("John");
+    let _john = Person::new("John");
 
     let name: String = "Jane".to_string();
-    let jane = Person::new(name/*.as_ref()*/);
+    let _jane = Person::new(name/*.as_ref()*/);
 }
 
 pub(crate) fn trait_drop() {
@@ -144,7 +144,6 @@ pub(crate) fn trait_drop() {
         }
     }
 
-    let mut clever: Creature;
     {
         let goblin = Creature::new("Jeff");
         println!("game proceeds");

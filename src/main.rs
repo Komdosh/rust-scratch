@@ -46,6 +46,7 @@ fn main() {
     // structures::vectors();
     // structures::hash_map();
     // structures::hash_set();
+    structures::vector_objects();
 
     // traits::traits();
     // traits::trait_parameters();
@@ -56,7 +57,7 @@ fn main() {
 
     // dispatch::static_dispatch();
     // dispatch::dynamic_dispatch();
-    dispatch::dispatch_in_action();
+    // dispatch::dispatch_in_action();
 }
 
 

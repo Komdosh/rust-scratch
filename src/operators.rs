@@ -1,5 +1,4 @@
 use std::ops::{Add, AddAssign, Neg};
-use std::process::Output;
 
 pub(crate) fn overloading() {
     #[derive(Debug, PartialEq, Eq)]
@@ -55,7 +54,7 @@ pub(crate) fn overloading() {
     // NAN == NAN -> false
 
     let mut a = Complex::new(1, 2);
-    let mut b = Complex::new(3, 4);
+    let b = Complex::new(3, 4);
 
     a += b;
 

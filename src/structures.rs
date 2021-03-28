@@ -2,7 +2,7 @@
 
 use core::{fmt, mem};
 use std::collections::{HashMap, HashSet};
-use std::fmt::{Display};
+use std::fmt::Display;
 
 struct Point<T: Display> {
     x: T,
@@ -263,4 +263,66 @@ pub fn hash_set() {
 
     println!("difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.difference(&_6_10));
     println!("symmetric difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.symmetric_difference(&_6_10));
+}
+
+pub(crate) fn vector_objects() {
+    trait Animal {
+        fn name(&self) -> &'static str;
+
+        fn talk(&self) {
+            println!("{} cannot talk", self.name());
+        }
+    }
+
+    struct Cat {
+        name: &'static str
+    }
+
+    struct Dog {
+        name: &'static str
+    }
+
+    impl Animal for Cat {
+        fn name(&self) -> &'static str {
+            self.name
+        }
+
+        fn talk(&self) {
+            println!("{} says meow", self.name)
+        }
+    }
+
+    impl Animal for Dog {
+        fn name(&self) -> &'static str {
+            self.name
+        }
+    }
+
+    enum Creature {
+        Dog(Dog),
+        Cat(Cat),
+    }
+
+    let mut creatures = Vec::new();
+    creatures.push(Creature::Dog(
+        Dog { name: "John" }
+    ));
+    creatures.push(Creature::Cat(
+        Cat { name: "Fluffy" }
+    ));
+
+    for c in creatures {
+        match c {
+            Creature::Dog(d) => d.talk(),
+            Creature::Cat(c) => c.talk()
+        }
+    }
+
+    let mut animals: Vec<Box<dyn Animal>> = Vec::new();
+    animals.push(Box::new(Dog{name: "John"}));
+    animals.push(Box::new(Cat{name: "Fluffy"}));
+
+    for a in animals.iter(){
+        a.talk()
+    }
 }
