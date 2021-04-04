@@ -59,7 +59,7 @@ pub(crate) fn lifetime(){
     }
 
     impl Person{
-        fn get_ref_name<'lifetime_person>(&'lifetime_person self) -> &'lifetime_person String{
+        fn get_ref_name(&self) -> &String {
             &self.name
         }
     }
@@ -74,4 +74,20 @@ pub(crate) fn lifetime(){
     let tesla = Company{ name: String::from("Tesla"), ceo: &boss};
 
     println!("{:?}", tesla)
+}
+
+pub(crate) fn lifetime_in_struct(){
+    #[derive(Debug)]
+    struct Person<'lifetime_person>{
+        name: &'lifetime_person str
+    }
+
+    impl<'lifetime_person_impl> Person<'lifetime_person_impl>{
+        fn talk(&self){
+            println!("Hi, my name is {}.", self.name);
+        }
+    }
+
+    let boss = Person {name: "Elon Musk"};
+    boss.talk();
 }
