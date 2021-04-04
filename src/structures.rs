@@ -2,7 +2,7 @@
 
 use core::{fmt, mem};
 use std::collections::{HashMap, HashSet};
-use std::fmt::{Debug, Display};
+use std::fmt::Display;
 
 struct Point<T: Display> {
     x: T,
@@ -265,10 +265,8 @@ pub fn hash_set() {
     println!("symmetric difference of {:?} and {:?} are {:?}", _2_8, _6_10, _2_8.symmetric_difference(&_6_10));
 }
 
-
-pub fn traits() {
+pub(crate) fn vector_objects() {
     trait Animal {
-        fn create(name: &'static str) -> Self;
         fn name(&self) -> &'static str;
 
         fn talk(&self) {
@@ -285,10 +283,6 @@ pub fn traits() {
     }
 
     impl Animal for Cat {
-        fn create(name: &'static str) -> Cat {
-            Cat { name }
-        }
-
         fn name(&self) -> &'static str {
             self.name
         }
@@ -299,74 +293,36 @@ pub fn traits() {
     }
 
     impl Animal for Dog {
-        fn create(name: &'static str) -> Dog {
-            Dog { name }
-        }
-
         fn name(&self) -> &'static str {
             self.name
         }
     }
 
-    let cat = Cat::create("Mr. Whiskers");
-    cat.talk();
-    let dog: Dog = Animal::create("Mint Butler");
-    dog.talk();
-
-
-    trait Summable<T> {
-        fn sum(&self) -> T;
+    enum Creature {
+        Dog(Dog),
+        Cat(Cat),
     }
 
-    impl Summable<i32> for Vec<i32> {
-        fn sum(&self) -> i32 {
-            let mut result: i32 = 0;
-            for x in self {
-                result += *x;
-            }
-            return result;
+    let mut creatures = Vec::new();
+    creatures.push(Creature::Dog(
+        Dog { name: "John" }
+    ));
+    creatures.push(Creature::Cat(
+        Cat { name: "Fluffy" }
+    ));
+
+    for c in creatures {
+        match c {
+            Creature::Dog(d) => d.talk(),
+            Creature::Cat(c) => c.talk()
         }
     }
 
-    let a = vec![1, 2, 3];
-    println!("sum = {}", a.sum())
-}
+    let mut animals: Vec<Box<dyn Animal>> = Vec::new();
+    animals.push(Box::new(Dog{name: "John"}));
+    animals.push(Box::new(Cat{name: "Fluffy"}));
 
-pub(crate) fn trait_parameters() {
-    #[derive(Debug)]
-    struct Circle {
-        radius: f64
+    for a in animals.iter(){
+        a.talk()
     }
-    #[derive(Debug)]
-    struct Square {
-        side: f64
-    }
-
-    trait Shape {
-        fn area(&self) -> f64;
-    }
-
-    impl Shape for Square {
-        fn area(&self) -> f64 {
-            self.side * self.side
-        }
-    }
-
-    impl Shape for Circle {
-        fn area(&self) -> f64 {
-            self.radius * self.radius * std::f64::consts::PI
-        }
-    }
-
-    // fn print_info(shape: impl Shape + Debug) {
-    // fn print_info<T: Shape+Debug>(shape: T) {
-    fn print_info<T>(shape: T)
-        where T: Shape + Debug
-    {
-        println!("{:?}", shape);
-        println!("The area is {}", shape.area())
-    }
-
-    let circle = Circle { radius: 2.0 };
-    print_info(circle);
 }
