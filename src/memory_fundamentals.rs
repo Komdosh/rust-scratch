@@ -45,9 +45,33 @@ pub(crate) fn borrowing() {
     }
     println!("a = {}", a);
 
-    let mut z = vec![3,2,1];
+    let z = vec![3,2,1];
 
     for i in &z{
         println!("i = {}", i);
     }
+}
+
+pub(crate) fn lifetime(){
+    #[derive(Debug)]
+    struct Person{
+        name: String
+    }
+
+    impl Person{
+        fn get_ref_name<'lifetime_person>(&'lifetime_person self) -> &'lifetime_person String{
+            &self.name
+        }
+    }
+
+    #[derive(Debug)]
+    struct Company<'lifetime_company> {
+        name: String,
+        ceo: &'lifetime_company Person
+    }
+
+    let boss = Person {name: String::from("Elon Musk")};
+    let tesla = Company{ name: String::from("Tesla"), ceo: &boss};
+
+    println!("{:?}", tesla)
 }

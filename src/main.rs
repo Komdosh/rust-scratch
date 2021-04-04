@@ -61,7 +61,9 @@ fn main() {
     // dispatch::dispatch_in_action();
 
     // memory_fundamentals::ownership();
-    memory_fundamentals::borrowing();
+    // memory_fundamentals::borrowing();
+
+    memory_fundamentals::lifetime();
 }
 
 
