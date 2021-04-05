@@ -12,6 +12,7 @@ mod traits;
 mod operators;
 mod dispatch;
 mod memory_fundamentals;
+mod multithreading;
 
 
 fn main() {
@@ -65,7 +66,8 @@ fn main() {
     // memory_fundamentals::lifetime();
     // memory_fundamentals::lifetime_in_struct();
     // memory_fundamentals::ref_count_demo();
-    memory_fundamentals::atomic_ref_count_demo();
+    // memory_fundamentals::atomic_ref_count_demo();
+    multithreading::mutex();
 }
 
 
