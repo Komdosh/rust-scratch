@@ -63,7 +63,8 @@ fn main() {
     // memory_fundamentals::ownership();
     // memory_fundamentals::borrowing();
     // memory_fundamentals::lifetime();
-    memory_fundamentals::lifetime_in_struct();
+    // memory_fundamentals::lifetime_in_struct();
+    memory_fundamentals::ref_count_demo();
 }
 
 

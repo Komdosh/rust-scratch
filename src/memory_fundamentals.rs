@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 pub(crate) fn ownership() {
     let v = vec![1, 2, 3];
 
@@ -45,20 +47,20 @@ pub(crate) fn borrowing() {
     }
     println!("a = {}", a);
 
-    let z = vec![3,2,1];
+    let z = vec![3, 2, 1];
 
-    for i in &z{
+    for i in &z {
         println!("i = {}", i);
     }
 }
 
-pub(crate) fn lifetime(){
+pub(crate) fn lifetime() {
     #[derive(Debug)]
-    struct Person{
+    struct Person {
         name: String
     }
 
-    impl Person{
+    impl Person {
         fn get_ref_name(&self) -> &String {
             &self.name
         }
@@ -67,27 +69,53 @@ pub(crate) fn lifetime(){
     #[derive(Debug)]
     struct Company<'lifetime_company> {
         name: String,
-        ceo: &'lifetime_company Person
+        ceo: &'lifetime_company Person,
     }
 
-    let boss = Person {name: String::from("Elon Musk")};
-    let tesla = Company{ name: String::from("Tesla"), ceo: &boss};
+    let boss = Person { name: String::from("Elon Musk") };
+    let tesla = Company { name: String::from("Tesla"), ceo: &boss };
 
     println!("{:?}", tesla)
 }
 
-pub(crate) fn lifetime_in_struct(){
+pub(crate) fn lifetime_in_struct() {
     #[derive(Debug)]
-    struct Person<'lifetime_person>{
+    struct Person<'lifetime_person> {
         name: &'lifetime_person str
     }
 
-    impl<'lifetime_person_impl> Person<'lifetime_person_impl>{
-        fn talk(&self){
+    impl<'lifetime_person_impl> Person<'lifetime_person_impl> {
+        fn talk(&self) {
             println!("Hi, my name is {}.", self.name);
         }
     }
 
-    let boss = Person {name: "Elon Musk"};
+    let boss = Person { name: "Elon Musk" };
     boss.talk();
+}
+
+
+pub(crate) fn ref_count_demo() {
+    struct Person {
+        name: Rc<String>
+    }
+
+    impl Person {
+        fn new(name: Rc<String>) -> Person {
+            Person { name }
+        }
+        fn greet(&self) {
+            println!("Hi, my name is {}.", self.name);
+        }
+    }
+
+    let name = Rc::new("John".to_string());
+    println!("Name = {}, name has {} strong pointers", name, Rc::strong_count(&name));
+    {
+        let person = Person::new(name.clone());
+        println!("Name = {}, name has {} strong pointers", name, Rc::strong_count(&name));
+        person.greet();
+    }
+    println!("Name = {}, name has {} strong pointers", name, Rc::strong_count(&name));
+    println!("Name = {}", name);
 }
