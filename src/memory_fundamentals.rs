@@ -1,4 +1,6 @@
 use std::rc::Rc;
+use std::sync::Arc;
+use std::thread;
 
 pub(crate) fn ownership() {
     let v = vec![1, 2, 3];
@@ -118,4 +120,27 @@ pub(crate) fn ref_count_demo() {
     }
     println!("Name = {}, name has {} strong pointers", name, Rc::strong_count(&name));
     println!("Name = {}", name);
+}
+
+pub(crate) fn atomic_ref_count_demo() {
+    struct Person {
+        name: Arc<String>
+    }
+
+    impl Person {
+        fn new(name: Arc<String>) -> Person {
+            Person { name }
+        }
+        fn greet(&self) {
+            println!("Hi, my name is {}.", self.name);
+        }
+    }
+    let name = Arc::new("John".to_string());
+    let person = Person::new(name.clone());
+    let t = thread::spawn(move || {
+        person.greet();
+    });
+
+    println!("Name = {}", name);
+    t.join().unwrap()
 }

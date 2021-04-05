@@ -64,7 +64,8 @@ fn main() {
     // memory_fundamentals::borrowing();
     // memory_fundamentals::lifetime();
     // memory_fundamentals::lifetime_in_struct();
-    memory_fundamentals::ref_count_demo();
+    // memory_fundamentals::ref_count_demo();
+    memory_fundamentals::atomic_ref_count_demo();
 }
 
 
