@@ -1,3 +1,4 @@
+use std::cell::RefCell;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::thread;
@@ -143,4 +144,130 @@ pub(crate) fn atomic_ref_count_demo() {
 
     println!("Name = {}", name);
     t.join().unwrap()
+}
+
+
+pub(crate) fn circular_references() {
+    struct Student {
+        name: String,
+        courses: Vec<Rc<RefCell<Course>>>,
+    }
+
+    impl Student {
+        fn new(name: &str) -> Student {
+            Student {
+                name: name.into(),
+                courses: Vec::new(),
+            }
+        }
+    }
+
+    struct Course {
+        name: String,
+        students: Vec<Rc<RefCell<Student>>>,
+    }
+
+    impl Course {
+        fn new(name: &str) -> Course {
+            Course {
+                name: name.into(),
+                students: Vec::new(),
+            }
+        }
+
+        fn add_student(course: Rc<RefCell<Course>>, student: Rc<RefCell<Student>>) {
+            student.borrow_mut().courses.push(course.clone());
+            course.borrow_mut().students.push(student.clone());
+            course.borrow_mut().students.push(student);
+        }
+    }
+
+    let john = Rc::new(
+        RefCell::new(Student::new("John"))
+    );
+    let jane = Rc::new(
+        RefCell::new(Student::new("John"))
+    );
+    let course = Course::new("Rust Course");
+    let magic_course = Rc::new(
+        RefCell::new(course)
+    );
+
+    // magic_course.add_student(john);
+
+    Course::add_student(magic_course.clone(), john);
+    Course::add_student(magic_course, jane);
+}
+
+pub(crate) fn circular_references_part2() {
+    struct Student {
+        name: String
+    }
+
+    impl Student {
+        fn new(name: &str) -> Student {
+            Student {
+                name: name.into()
+            }
+        }
+
+        fn courses(&self, platform: Platform) -> Vec<String>{
+            platform.enrollments.iter()
+                .filter(|&e| e.student.name == self.name)
+                .map(|e| e.course.name.clone())
+                .collect()
+        }
+    }
+
+    struct Course {
+        name: String,
+    }
+
+    impl Course {
+        fn new(name: &str) -> Course {
+            Course {
+                name: name.into()
+            }
+        }
+    }
+
+    struct Enrollment<'el> {
+        student: &'el Student,
+        course: &'el Course,
+    }
+
+    impl<'el> Enrollment<'el> {
+        fn new(student: &'el Student, course: &'el Course) -> Enrollment<'el> {
+            Enrollment {
+                student,
+                course,
+            }
+        }
+    }
+
+    struct Platform<'el> {
+        enrollments: Vec<Enrollment<'el>>
+    }
+
+    impl<'el> Platform<'el> {
+        fn new() -> Platform<'el> {
+            Platform {
+                enrollments: Vec::new()
+            }
+        }
+
+        fn enroll(&mut self, student: &'el Student, course: &'el Course) {
+            self.enrollments.push(Enrollment::new(student, course))
+        }
+    }
+
+    let john = Student::new("John");
+    let course = Course::new("Intro to Rust");
+
+    let mut p = Platform::new();
+    p.enroll(&john, &course);
+
+    for c in john.courses(p){
+        println!("John is taking {}", c);
+    }
 }

@@ -67,7 +67,10 @@ fn main() {
     // memory_fundamentals::lifetime_in_struct();
     // memory_fundamentals::ref_count_demo();
     // memory_fundamentals::atomic_ref_count_demo();
-    multithreading::mutex();
+    // memory_fundamentals::circular_references();
+    memory_fundamentals::circular_references_part2();
+
+    // multithreading::mutex();
 }
 
 
