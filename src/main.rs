@@ -13,6 +13,7 @@ mod operators;
 mod dispatch;
 mod memory_fundamentals;
 mod multithreading;
+mod crates;
 
 
 fn main() {
@@ -71,7 +72,9 @@ fn main() {
     // memory_fundamentals::circular_references_part2();
 
     // multithreading::mutex();
-    multithreading::threading();
+    // multithreading::threading();
+
+    crates::external_crate();
 }
 
 

@@ -42,5 +42,7 @@ pub(crate) fn threading() {
         print!("-");
         thread::sleep(time::Duration::from_millis(300));
     }
-    handle.join();
+    println!();
+    let res = handle.join();
+    println!("{:?}",res);
 }
