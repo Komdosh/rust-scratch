@@ -68,9 +68,10 @@ fn main() {
     // memory_fundamentals::ref_count_demo();
     // memory_fundamentals::atomic_ref_count_demo();
     // memory_fundamentals::circular_references();
-    memory_fundamentals::circular_references_part2();
+    // memory_fundamentals::circular_references_part2();
 
     // multithreading::mutex();
+    multithreading::threading();
 }
 
 
