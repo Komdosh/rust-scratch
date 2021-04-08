@@ -75,6 +75,7 @@ fn main() {
     // multithreading::threading();
 
     crates::external_crate();
+    crates::own_lib();
 }
 
 

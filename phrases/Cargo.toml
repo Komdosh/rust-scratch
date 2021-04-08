@@ -1,0 +1,5 @@
+[package]
+name = "phrases"
+version = "0.1.0"
+authors = ["Andrey Tabakov <komdosh@yandex.ru>"]
+edition = "2018"
