@@ -12,6 +12,8 @@ mod traits;
 mod operators;
 mod dispatch;
 mod memory_fundamentals;
+mod multithreading;
+mod crates;
 
 
 fn main() {
@@ -63,7 +65,17 @@ fn main() {
     // memory_fundamentals::ownership();
     // memory_fundamentals::borrowing();
     // memory_fundamentals::lifetime();
-    memory_fundamentals::lifetime_in_struct();
+    // memory_fundamentals::lifetime_in_struct();
+    // memory_fundamentals::ref_count_demo();
+    // memory_fundamentals::atomic_ref_count_demo();
+    // memory_fundamentals::circular_references();
+    // memory_fundamentals::circular_references_part2();
+
+    // multithreading::mutex();
+    // multithreading::threading();
+
+    crates::external_crate();
+    crates::own_lib();
 }
 
 
